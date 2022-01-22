@@ -1,0 +1,1 @@
+export { CombinationsTable } from "./CombinationsTable";

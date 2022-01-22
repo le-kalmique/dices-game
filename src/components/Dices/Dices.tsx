@@ -1,16 +1,20 @@
 import React, { useMemo } from "react";
+import { ToggleButton } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import { RollState } from "../../types/enums";
 import styles from "./Dices.module.scss";
 
 interface IProps {
   onRoll: () => void;
   onSave: () => void;
+  onNext: () => void;
   state: RollState;
 }
 
 export const Dices: React.FC<IProps> = ({
   onRoll,
   onSave,
+  onNext,
   state,
   children,
 }) => {
@@ -33,31 +37,19 @@ export const Dices: React.FC<IProps> = ({
       </div>
       <div className={styles.buttonsContainer}>
         {state === RollState.Roll && (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={() => onRoll()}
-          >
+          <Button variant="outline-primary" onClick={() => onRoll()}>
             Roll
-          </button>
+          </Button>
         )}
         {state === RollState.Choose && (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={() => onSave()}
-          >
+          <Button variant="outline-primary" onClick={() => onSave()}>
             Save
-          </button>
+          </Button>
         )}
         {state === RollState.Results && (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={() => onSave()}
-          >
+          <Button variant="outline-primary" onClick={() => onNext()}>
             Next
-          </button>
+          </Button>
         )}
       </div>
     </div>
