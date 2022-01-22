@@ -22,14 +22,26 @@ export const App: React.FC = () => {
   >([]);
 
   const onNext = () => {
-    setUsers((u) => {
-      const newUsers = [...u];
+    setUsers(() => {
+      const newUsers = [...users];
       const activeUserIndex = newUsers.findIndex((user) => user.active);
-      newUsers[activeUserIndex].active = false;
-      newUsers[(activeUserIndex + 1) % newUsers.length].active = true;
-      if (activeUserIndex + (1 % newUsers.length) === 0) {
+      newUsers[activeUserIndex] = {
+        ...newUsers[activeUserIndex],
+        active: false,
+      };
+      newUsers[(activeUserIndex + 1) % newUsers.length] = {
+        ...newUsers[(activeUserIndex + 1) % newUsers.length],
+        active: true,
+      };
+      if ((activeUserIndex + 1) % newUsers.length === 0) {
         setLvl((l) => l + 1);
       }
+      console.log(
+        activeUserIndex,
+        (activeUserIndex + 1) % newUsers.length,
+        newUsers
+      );
+
       return newUsers;
     });
     setRollState(RollState.Roll);
