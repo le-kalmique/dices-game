@@ -1,0 +1,36 @@
+.container {
+  padding: 20px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border: 2px solid blue;
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+  &:hover {
+    border: 2px solid transparent;
+  }
+}
+
+.saving {
+  opacity: 0.5;
+  &:hover {
+    border: 2px solid green;
+  }
+}
+
+.saved {
+  opacity: 0.8;
+  border: 2px solid green;
+}
+
+.final {
+  opacity: 1;
+  border: 2px solid transparent;
+}
