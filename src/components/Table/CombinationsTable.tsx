@@ -63,14 +63,15 @@ export const CombinationsTable: React.FC<IProps> = ({
                     disabled={disabled || !user.active}
                     onChange={(e) => onChange(user, e.target.value, c)}
                   />
-                  {workingCombinations?.find((wc) => wc.name === c.name) && (
-                    <span className={styles.availablePoints}>
-                      {
-                        workingCombinations?.find((wc) => wc.name === c.name)
-                          ?.points
-                      }
-                    </span>
-                  )}
+                  {workingCombinations?.find((wc) => wc.name === c.name) &&
+                    user.active && (
+                      <span className={styles.availablePoints}>
+                        {
+                          workingCombinations?.find((wc) => wc.name === c.name)
+                            ?.points
+                        }
+                      </span>
+                    )}
                 </td>
               ))}
             </tr>
@@ -94,14 +95,15 @@ export const CombinationsTable: React.FC<IProps> = ({
                     disabled={disabled || !user.active}
                     onChange={(e) => onChange(user, e.target.value, c)}
                   />
-                  {workingCombinations?.find((wc) => wc.name === c.name) && (
-                    <span className={styles.availablePoints}>
-                      {
-                        workingCombinations?.find((wc) => wc.name === c.name)
-                          ?.points
-                      }
-                    </span>
-                  )}
+                  {workingCombinations?.find((wc) => wc.name === c.name) &&
+                    user.active && (
+                      <span className={styles.availablePoints}>
+                        {
+                          workingCombinations?.find((wc) => wc.name === c.name)
+                            ?.points
+                        }
+                      </span>
+                    )}
                 </td>
               ))}
             </tr>
