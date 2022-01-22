@@ -11,16 +11,21 @@ interface IProps {
   state: RollState;
   setState: (state: RollState) => void;
   onNext: () => void;
+  onDicesChanged: (dices: IDice[]) => void;
+  rolls: number;
+  setRolls: (rolls: number) => void;
 }
 
 export const DicesContainer: React.FC<IProps> = ({
   state,
   setState,
   onNext,
+  onDicesChanged,
+  rolls,
+  setRolls,
 }) => {
   const [dices, setDices] = useState<IDice[]>(defaultDices);
   const [rollAllTrigger, setRollAllTrigger] = useState(false);
-  const [rollAmount, setRollAmount] = useState(0);
 
   useEffect(() => {
     switch (state) {
@@ -32,25 +37,26 @@ export const DicesContainer: React.FC<IProps> = ({
         break;
       case RollState.Results:
         setDices((d) =>
-          d.map(() => ({ value: 0, saved: false, disabled: true }))
+          d.map((dice) => ({ ...dice, saved: false, disabled: true }))
         );
     }
   }, [state]);
 
   useEffect(() => {
-    if (rollAmount === 3) {
+    if (rolls === 3) {
       setState(RollState.Results);
     }
-  }, [rollAmount]);
+  }, [rolls]);
 
   useEffect(() => {
     if (
       state === RollState.Roll &&
       dices.every((dice) => dice.disabled || dice.saved)
     ) {
-      setRollAmount((amount) => amount + 1);
+      setRolls(rolls + 1);
       setState(RollState.Choose);
     }
+    onDicesChanged(dices);
   }, [dices]);
 
   const onRollDice = (index: number, value: number) => {
@@ -79,9 +85,13 @@ export const DicesContainer: React.FC<IProps> = ({
       state={state}
       onRoll={() => setRollAllTrigger(!rollAllTrigger)}
       onSave={() => setState(RollState.Roll)}
+      onStop={() => setState(RollState.Results)}
       onNext={() => {
         onNext();
-        setRollAmount(0);
+        setDices((d) =>
+          d.map(() => ({ value: 0, saved: false, disabled: false }))
+        );
+        setRolls(0);
       }}
     >
       {dices.map((dice, i) => (

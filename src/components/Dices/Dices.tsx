@@ -8,6 +8,7 @@ interface IProps {
   onRoll: () => void;
   onSave: () => void;
   onNext: () => void;
+  onStop: () => void;
   state: RollState;
 }
 
@@ -15,6 +16,7 @@ export const Dices: React.FC<IProps> = ({
   onRoll,
   onSave,
   onNext,
+  onStop,
   state,
   children,
 }) => {
@@ -42,9 +44,14 @@ export const Dices: React.FC<IProps> = ({
           </Button>
         )}
         {state === RollState.Choose && (
-          <Button variant="outline-primary" onClick={() => onSave()}>
-            Save
-          </Button>
+          <>
+            <Button variant="outline-primary" onClick={() => onSave()}>
+              Save
+            </Button>
+            <Button variant="outline-secondary" onClick={() => onStop()}>
+              Stop
+            </Button>
+          </>
         )}
         {state === RollState.Results && (
           <Button variant="outline-primary" onClick={() => onNext()}>

@@ -8,9 +8,14 @@ import styles from "./CombinationsTable.module.scss";
 interface IProps {
   users: IUser[];
   disabled?: boolean;
+  workingCombinations?: ICombination[];
 }
 
-export const CombinationsTable: React.FC<IProps> = ({ users, disabled }) => {
+export const CombinationsTable: React.FC<IProps> = ({
+  users,
+  disabled,
+  workingCombinations,
+}) => {
   const onChange = (
     user: IUser,
     value: number | string,
@@ -58,6 +63,14 @@ export const CombinationsTable: React.FC<IProps> = ({ users, disabled }) => {
                     disabled={disabled || !user.active}
                     onChange={(e) => onChange(user, e.target.value, c)}
                   />
+                  {workingCombinations?.find((wc) => wc.name === c.name) && (
+                    <span className={styles.availablePoints}>
+                      {
+                        workingCombinations?.find((wc) => wc.name === c.name)
+                          ?.points
+                      }
+                    </span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -81,6 +94,14 @@ export const CombinationsTable: React.FC<IProps> = ({ users, disabled }) => {
                     disabled={disabled || !user.active}
                     onChange={(e) => onChange(user, e.target.value, c)}
                   />
+                  {workingCombinations?.find((wc) => wc.name === c.name) && (
+                    <span className={styles.availablePoints}>
+                      {
+                        workingCombinations?.find((wc) => wc.name === c.name)
+                          ?.points
+                      }
+                    </span>
+                  )}
                 </td>
               ))}
             </tr>

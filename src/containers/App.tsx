@@ -6,15 +6,20 @@ import { UserAdd } from "../components/UserAdd";
 import { DicesContainer } from "./DicesContainer";
 import { TableContainer } from "./TableContainer";
 
-import { IUser } from "../types/interfaces";
+import { ICombination, IUser } from "../types/interfaces";
 import { RollState } from "../types/enums";
 import { countPoints } from "../utils";
+import { combinationCheck } from "../utils/combinationCheck";
 
 export const App: React.FC = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [rollState, setRollState] = useState<RollState>(RollState.Roll);
   const [users, setUsers] = useState<IUser[]>([]);
   const [lvl, setLvl] = useState(1);
+  const [rolls, setRolls] = useState(0);
+  const [workingCombinations, setWorkingCombinations] = useState<
+    ICombination[]
+  >([]);
 
   const onNext = () => {
     setUsers((u) => {
@@ -73,6 +78,11 @@ export const App: React.FC = () => {
             state={rollState}
             setState={setRollState}
             onNext={onNext}
+            onDicesChanged={(dices) =>
+              setWorkingCombinations(combinationCheck(dices, rolls))
+            }
+            rolls={rolls}
+            setRolls={setRolls}
           />
           <Message>Ходит {users.find((u) => u.active)?.name}</Message>
         </>
@@ -80,6 +90,7 @@ export const App: React.FC = () => {
       <TableContainer
         users={users}
         disabled={rollState !== RollState.Results}
+        workingCombinations={workingCombinations}
       />
       <Message>
         <Button onClick={() => countResults()}>Закончить игру</Button>
