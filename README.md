@@ -4,7 +4,7 @@
 
 ### Progress:
 
-![10%](https://progress-bar.dev/10/?width=250)
+![20%](https://progress-bar.dev/20/?width=250)
 
 ### Goals:
 
