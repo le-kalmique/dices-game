@@ -7,8 +7,17 @@ import { defaultDices } from "../constants";
 import { RollState } from "../types/enums";
 import { IDice } from "../types/interfaces";
 
-export const DicesContainer: React.FC = () => {
-  const [state, setState] = useState(RollState.Roll);
+interface IProps {
+  state: RollState;
+  setState: (state: RollState) => void;
+  onNext: () => void;
+}
+
+export const DicesContainer: React.FC<IProps> = ({
+  state,
+  setState,
+  onNext,
+}) => {
   const [dices, setDices] = useState<IDice[]>(defaultDices);
   const [rollAllTrigger, setRollAllTrigger] = useState(false);
   const [rollAmount, setRollAmount] = useState(0);
@@ -70,6 +79,10 @@ export const DicesContainer: React.FC = () => {
       state={state}
       onRoll={() => setRollAllTrigger(!rollAllTrigger)}
       onSave={() => setState(RollState.Roll)}
+      onNext={() => {
+        onNext();
+        setRollAmount(0);
+      }}
     >
       {dices.map((dice, i) => (
         <Dice
