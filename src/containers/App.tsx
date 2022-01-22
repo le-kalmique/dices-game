@@ -8,6 +8,7 @@ import { TableContainer } from "./TableContainer";
 
 import { IUser } from "../types/interfaces";
 import { RollState } from "../types/enums";
+import { countPoints } from "../utils";
 
 export const App: React.FC = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -29,40 +30,16 @@ export const App: React.FC = () => {
     setRollState(RollState.Roll);
   };
 
-  const countResults = () => {
-    setUsers((u) => {
-      const newUsers = [...u].map((user) => {
-        let schoolResult = 0;
-        let result = user.combinations.reduce((acc, v) => {
-          //@ts-ignore
-          if (v.number) {
-            //@ts-ignore
-            schoolResult += v.points;
-            return acc;
-          } else {
-            return acc + (v.points || 0);
-          }
-        }, 0);
-        if (schoolResult >= 0) {
-          result += schoolResult;
-        } else {
-          result -= 50;
-        }
-        return {
-          ...user,
-          result,
-        };
-      });
-      return newUsers;
-    });
-  };
-
   useEffect(() => {
     if (lvl === 15) {
-      console.log("GAME OVER");
       countResults();
     }
   }, [lvl]);
+
+  const countResults = () => {
+    setUsers((u) => countPoints(u));
+    setGameStarted(false);
+  };
 
   return (
     <Wrapper>
